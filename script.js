@@ -126,7 +126,6 @@ function createQuestion(operation, config) {
     case "subtraction":
       num1 = random(1, config.maxNumber);
       num2 = random(1, num1);
-      // CM2: 20% de chance d'avoir un résultat négatif
       if (config.allowNegative && Math.random() > 0.8) {
         num2 = random(num1, config.maxNumber);
       }
@@ -192,55 +191,91 @@ function handleIncorrectAnswer() {
   const explanation = generateExplanation(currentQuestion, false);
   showFeedback(
     "error",
-    "❌ Oups ! Regardons ensemble comment faire :",
+    "❌ Pas de souci ! Voici une méthode simple :",
     explanation
   );
 }
 
-// Explications
+// Explications pédagogiques
 function generateExplanation(q, isCorrect) {
   const explanations = {
-    addition: () => `
-      <div class="step">📝 On additionne ${q.num1} et ${q.num2}</div>
-      <div class="step">🧮 ${q.num1} + ${q.num2} = ${q.answer}</div>
-      ${
-        !isCorrect
-          ? `<div class="step">💡 Imagine que tu as ${q.num1} bonbons et qu'on te donne ${q.num2} bonbons de plus. Tu en as maintenant ${q.answer} !</div>`
-          : ""
+    addition: () => {
+      if (q.num1 >= 100 || q.num2 >= 100) {
+        const rounded1 = Math.round(q.num1 / 10) * 10;
+        const rounded2 = Math.round(q.num2 / 10) * 10;
+        return `
+          <div class="step">🎯 <strong>Astuce des nombres ronds :</strong></div>
+          <div class="step">1️⃣ Arrondis : ${q.num1} ≈ ${rounded1} et ${
+          q.num2
+        } ≈ ${rounded2}</div>
+          <div class="step">2️⃣ Calcule : ${rounded1} + ${rounded2} = ${
+          rounded1 + rounded2
+        }</div>
+          <div class="step">3️⃣ Ajuste les différences pour trouver ${
+            q.answer
+          } !</div>
+          <div class="step">✅ Résultat exact : ${q.num1} + ${q.num2} = ${
+          q.answer
+        }</div>
+        `;
       }
-    `,
-    subtraction: () => `
-      <div class="step">📝 On retire ${q.num2} de ${q.num1}</div>
-      <div class="step">🧮 ${q.num1} - ${q.num2} = ${q.answer}</div>
-      ${
-        !isCorrect
-          ? `<div class="step">💡 Imagine que tu as ${q.num1} billes et que tu en donnes ${q.num2}. Il t'en reste ${q.answer} !</div>`
-          : ""
+      return `
+        <div class="step">🧮 ${q.num1} + ${q.num2} = ${q.answer}</div>
+        ${
+          !isCorrect
+            ? `<div class="step">💡 Imagine : tu as ${q.num1} bonbons, on t'en donne ${q.num2}. Total : ${q.answer} bonbons !</div>`
+            : ""
+        }
+      `;
+    },
+
+    subtraction: () => {
+      if (q.num1 >= 100) {
+        const rounded = Math.round(q.num2 / 10) * 10;
+        return `
+          <div class="step">🎯 <strong>Astuce de l'arrondi :</strong></div>
+          <div class="step">1️⃣ Arrondis ${q.num2} à ${rounded}</div>
+          <div class="step">2️⃣ ${q.num1} - ${rounded} = ${
+          q.num1 - rounded
+        }</div>
+          <div class="step">3️⃣ Ajuste pour trouver ${q.answer} !</div>
+          <div class="step">✅ ${q.num1} - ${q.num2} = ${q.answer}</div>
+        `;
       }
-    `,
+      return `
+        <div class="step">🧮 ${q.num1} - ${q.num2} = ${q.answer}</div>
+        ${
+          !isCorrect
+            ? `<div class="step">💡 Tu as ${q.num1} billes, tu en donnes ${q.num2}. Reste : ${q.answer} billes !</div>`
+            : ""
+        }
+      `;
+    },
+
     multiplication: () => `
-      <div class="step">📝 On multiplie ${q.num1} par ${q.num2}</div>
-      <div class="step">🧮 C'est ${q.num1} + ${q.num1} + ... (${
+      <div class="step">🎯 <strong>Astuce de la table :</strong></div>
+      <div class="step">1️⃣ C'est la table de ${q.num1}</div>
+      <div class="step">2️⃣ ${q.num1} × ${q.num2} = ${q.num1} répété ${
       q.num2
-    } fois)</div>
-      <div class="step">✅ ${q.num1} × ${q.num2} = ${q.answer}</div>
+    } fois</div>
+      <div class="step">3️⃣ ${q.num1} + ${q.num1} + ... (${q.num2} fois)</div>
+      <div class="step">✅ Résultat : ${q.answer}</div>
       ${
         !isCorrect
-          ? `<div class="step">💡 C'est la table de ${q.num1} !</div>`
+          ? `<div class="step">💡 Mémorise la table de ${q.num1} pour aller plus vite !</div>`
           : ""
       }
     `,
+
     division: () => `
-      <div class="step">📝 On divise ${q.num1} par ${q.num2}</div>
-      <div class="step">🧮 Combien de fois ${q.num2} rentre dans ${
-      q.num1
-    } ?</div>
-      <div class="step">✅ ${q.answer} fois ! (${q.num2} × ${q.answer} = ${
-      q.num1
-    })</div>
+      <div class="step">🎯 <strong>Astuce de la multiplication inverse :</strong></div>
+      <div class="step">1️⃣ Cherche : ${q.num2} × ? = ${q.num1}</div>
+      <div class="step">2️⃣ Dans la table de ${q.num2}, trouve ${q.num1}</div>
+      <div class="step">3️⃣ ${q.num2} × ${q.answer} = ${q.num1}</div>
+      <div class="step">✅ Donc ${q.num1} ÷ ${q.num2} = ${q.answer}</div>
       ${
         !isCorrect
-          ? `<div class="step">💡 Si tu partages ${q.num1} bonbons entre ${q.num2} personnes, chacun en aura ${q.answer} !</div>`
+          ? `<div class="step">💡 Partage ${q.num1} bonbons entre ${q.num2} amis : chacun ${q.answer} bonbons !</div>`
           : ""
       }
     `,
