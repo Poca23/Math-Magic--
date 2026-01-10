@@ -126,7 +126,8 @@ function createQuestion(operation, config) {
     case "subtraction":
       num1 = random(1, config.maxNumber);
       num2 = random(1, num1);
-      if (config.allowNegative && Math.random() > 0.7) {
+      // CM2: 20% de chance d'avoir un résultat négatif
+      if (config.allowNegative && Math.random() > 0.8) {
         num2 = random(num1, config.maxNumber);
       }
       answer = num1 - num2;
@@ -134,15 +135,15 @@ function createQuestion(operation, config) {
       break;
 
     case "multiplication":
-      num1 = random(2, config.multiplicationMax || 10);
-      num2 = random(2, config.multiplicationMax || 10);
+      num1 = random(2, config.multiplicationMax);
+      num2 = random(2, config.multiplicationMax);
       answer = num1 * num2;
       symbol = "×";
       break;
 
     case "division":
-      num2 = random(2, 10);
-      answer = random(2, 15);
+      num2 = random(2, config.multiplicationMax);
+      answer = random(2, 10);
       num1 = num2 * answer;
       symbol = "÷";
       break;
@@ -217,37 +218,26 @@ function generateExplanation(q, isCorrect) {
           : ""
       }
     `,
-    multiplication: () => {
-      let steps = [];
-      for (let i = 1; i <= Math.min(q.num2, 5); i++) {
-        steps.push(q.num1 * i);
+    multiplication: () => `
+      <div class="step">📝 On multiplie ${q.num1} par ${q.num2}</div>
+      <div class="step">🧮 C'est ${q.num1} + ${q.num1} + ... (${
+      q.num2
+    } fois)</div>
+      <div class="step">✅ ${q.num1} × ${q.num2} = ${q.answer}</div>
+      ${
+        !isCorrect
+          ? `<div class="step">💡 C'est la table de ${q.num1} !</div>`
+          : ""
       }
-      return `
-        <div class="step">📝 On multiplie ${q.num1} par ${q.num2}</div>
-        <div class="step">🧮 C'est comme additionner ${q.num1} un total de ${
-        q.num2
-      } fois</div>
-        <div class="step">📊 ${
-          q.num2 <= 5
-            ? `${steps.join(" + ")} = ${q.answer}`
-            : `${q.num1} × ${q.num2} = ${q.answer}`
-        }</div>
-        ${
-          !isCorrect
-            ? `<div class="step">💡 C'est la table de ${q.num1} !</div>`
-            : ""
-        }
-      `;
-    },
+    `,
     division: () => `
       <div class="step">📝 On divise ${q.num1} par ${q.num2}</div>
       <div class="step">🧮 Combien de fois ${q.num2} rentre dans ${
       q.num1
     } ?</div>
-      <div class="step">✅ Réponse : ${q.answer} fois</div>
-      <div class="step">🔍 Vérification : ${q.num2} × ${q.answer} = ${
+      <div class="step">✅ ${q.answer} fois ! (${q.num2} × ${q.answer} = ${
       q.num1
-    }</div>
+    })</div>
       ${
         !isCorrect
           ? `<div class="step">💡 Si tu partages ${q.num1} bonbons entre ${q.num2} personnes, chacun en aura ${q.answer} !</div>`
@@ -286,16 +276,20 @@ function generateHint(q, hintLevel) {
       division: `💡 Indice 1 : Pense aux tables de multiplication !`,
     },
     2: () => {
-      const range = Math.ceil(q.answer / 5);
-      const lower = Math.max(0, q.answer - range);
+      const range = Math.ceil(Math.abs(q.answer) / 5) || 1;
+      const lower = q.answer - range;
       const upper = q.answer + range;
       return `💡 Indice 2 : Le résultat est entre ${lower} et ${upper} !`;
     },
     3: () => {
-      const digitCount = q.answer.toString().length;
-      return `💡 Indice 3 : Le résultat a ${digitCount} chiffre${
+      const absAnswer = Math.abs(q.answer);
+      const digitCount = absAnswer.toString().length;
+      const firstDigit = absAnswer.toString()[0];
+      return `💡 Indice 3 : Le résultat${
+        q.answer < 0 ? " négatif" : ""
+      } a ${digitCount} chiffre${
         digitCount > 1 ? "s" : ""
-      } et commence par ${q.answer.toString()[0]} !`;
+      } et commence par ${firstDigit} !`;
     },
   };
 
@@ -314,7 +308,7 @@ getElement("answer").addEventListener("keypress", (e) => {
   if (e.key === "Enter") checkAnswer();
 });
 
-// Export des fonctions pour l'usage global (appelées depuis le HTML)
+// Export des fonctions pour l'usage global
 window.startLevel = startLevel;
 window.checkAnswer = checkAnswer;
 window.getHint = getHint;
