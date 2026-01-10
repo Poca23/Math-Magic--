@@ -66,22 +66,21 @@
             </div>
             <div class="footer-right">
                 <a href="https://portfolio-cnd.netlify.app/" target="_blank">Portfolio</a>
-                <a href="https://www.linkedin.com/in/naudin-claire/" target="_blank">LinkedIn</a>
-                <a href="https://www.facebook.com/profile.php?id=61564253862181" target="_blank">Facebook</a>
+                <a href="https://github.com/votre-compte" target="_blank">GitHub</a>
+                <a href="mailto:contact@cnd.com">Contact</a>
             </div>
         </div>
-        <div class="copyright">© Copyright 2026</div>
+        <div class="copyright">
+            © 2024 MathéMagic - CND. Tous droits réservés.
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
     <script>
-        // Enregistrement du Service Worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('✅ Service Worker enregistré'))
-                    .catch(err => console.log('❌ Erreur Service Worker:', err));
-            });
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log('✅ Service Worker enregistré'))
+                .catch(err => console.log('❌ Erreur SW:', err));
         }
     </script>
 </body>

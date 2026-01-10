@@ -7,6 +7,11 @@ const urlsToCache = [
   "./manifest.json",
   "./MathéMagic__-removebg-preview.png",
   "./Logo-CND-Final-removebg-preview.png",
+  "./levels/cp.js",
+  "./levels/ce1.js",
+  "./levels/ce2.js",
+  "./levels/cm1.js",
+  "./levels/cm2.js",
 ];
 
 // Installation du Service Worker

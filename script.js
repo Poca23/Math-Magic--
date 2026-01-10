@@ -1,3 +1,10 @@
+// Import des configurations de niveaux
+import { CP_CONFIG } from "./levels/cp.js";
+import { CE1_CONFIG } from "./levels/ce1.js";
+import { CE2_CONFIG } from "./levels/ce2.js";
+import { CM1_CONFIG } from "./levels/cm1.js";
+import { CM2_CONFIG } from "./levels/cm2.js";
+
 // Variables globales
 let currentLevel = "";
 let currentQuestion = {};
@@ -8,34 +15,11 @@ let deferredPrompt;
 
 // Configuration des niveaux
 const LEVELS = {
-  CP: {
-    operations: ["addition", "subtraction"],
-    maxNumber: 10,
-    allowNegative: false,
-  },
-  CE1: {
-    operations: ["addition", "subtraction"],
-    maxNumber: 20,
-    allowNegative: false,
-  },
-  CE2: {
-    operations: ["addition", "subtraction", "multiplication"],
-    maxNumber: 50,
-    multiplicationMax: 10,
-    allowNegative: false,
-  },
-  CM1: {
-    operations: ["addition", "subtraction", "multiplication", "division"],
-    maxNumber: 100,
-    multiplicationMax: 12,
-    allowNegative: true,
-  },
-  CM2: {
-    operations: ["addition", "subtraction", "multiplication", "division"],
-    maxNumber: 1000,
-    multiplicationMax: 15,
-    allowNegative: true,
-  },
+  CP: CP_CONFIG,
+  CE1: CE1_CONFIG,
+  CE2: CE2_CONFIG,
+  CM1: CM1_CONFIG,
+  CM2: CM2_CONFIG,
 };
 
 // Messages de félicitations
@@ -329,3 +313,10 @@ function showFeedback(type, message, explanation) {
 getElement("answer").addEventListener("keypress", (e) => {
   if (e.key === "Enter") checkAnswer();
 });
+
+// Export des fonctions pour l'usage global (appelées depuis le HTML)
+window.startLevel = startLevel;
+window.checkAnswer = checkAnswer;
+window.getHint = getHint;
+window.resetScore = resetScore;
+window.backToLevels = backToLevels;
