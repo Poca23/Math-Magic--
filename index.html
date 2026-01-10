@@ -4,8 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Application ludique d'apprentissage des mathématiques pour les enfants">
+    <meta name="theme-color" content="#667eea">
     <title>MathéMagic - Apprends les Maths !</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="MathéMagic__-removebg-preview.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MathéMagic">
+    <link rel="apple-touch-icon" href="MathéMagic__-removebg-preview.png">
 </head>
 
 <body>
@@ -35,6 +43,7 @@
             <div class="action-buttons">
                 <button class="btn-check" onclick="checkAnswer()">✅ Vérifier</button>
                 <button class="btn-hint" onclick="getHint()">💡 Indice (<span id="hintsLeft">3</span>)</button>
+                <button class="btn-reset" onclick="resetScore()">🔄 Reset Score</button>
                 <button class="btn-back" onclick="backToLevels()">🔙 Retour</button>
             </div>
 
@@ -65,6 +74,16 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('✅ Service Worker enregistré'))
+                    .catch(err => console.log('❌ Erreur Service Worker:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

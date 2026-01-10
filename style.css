@@ -1,3 +1,4 @@
+/* Reset et base */
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +16,7 @@ body {
   padding: 10px;
 }
 
+/* Container principal */
 .container {
   background: white;
   border-radius: 20px;
@@ -23,8 +25,31 @@ body {
   width: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   margin: 20px 0;
+  position: relative;
 }
 
+/* Bouton d'installation PWA */
+.install-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: none;
+  transition: all 0.3s;
+}
+
+.install-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Header */
 .app-logo {
   display: block;
   margin: 0 auto 10px;
@@ -39,6 +64,7 @@ h1 {
   font-size: clamp(1.2rem, 4vw, 2rem);
 }
 
+/* Sélection de niveau */
 .level-selector {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -46,6 +72,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Boutons */
 button {
   padding: 15px;
   border: none;
@@ -67,9 +94,50 @@ button {
   box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
 }
 
+.btn-check {
+  background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+  color: white;
+  padding: 15px 30px;
+}
+
+.btn-hint {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 15px 30px;
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px 30px;
+}
+
+.btn-back {
+  background: #95a5a6;
+  color: white;
+  padding: 15px 30px;
+}
+
+.btn-check:hover,
+.btn-hint:hover,
+.btn-reset:hover,
+.btn-back:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Zone de jeu */
 .game-area {
   display: none;
   text-align: center;
+}
+
+.score {
+  text-align: center;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  margin: 15px 0;
+  color: #667eea;
+  font-weight: bold;
 }
 
 .question {
@@ -79,6 +147,7 @@ button {
   font-weight: bold;
 }
 
+/* Input */
 .input-area {
   margin: 20px 0;
 }
@@ -93,6 +162,7 @@ input[type="number"] {
   text-align: center;
 }
 
+/* Actions */
 .action-buttons {
   display: flex;
   gap: 10px;
@@ -101,31 +171,7 @@ input[type="number"] {
   margin: 20px 0;
 }
 
-.btn-check {
-  background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
-  color: white;
-  padding: 15px 30px;
-}
-
-.btn-hint {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-  padding: 15px 30px;
-}
-
-.btn-back {
-  background: #95a5a6;
-  color: white;
-  padding: 15px 30px;
-}
-
-.btn-check:hover,
-.btn-hint:hover,
-.btn-back:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
+/* Feedback */
 .feedback {
   margin: 20px 0;
   padding: 20px;
@@ -144,7 +190,6 @@ input[type="number"] {
     opacity: 0;
     transform: translateY(-20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -169,19 +214,7 @@ input[type="number"] {
   color: #856404;
 }
 
-.score {
-  text-align: center;
-  font-size: clamp(1rem, 3vw, 1.3rem);
-  margin: 15px 0;
-  color: #667eea;
-  font-weight: bold;
-}
-
-.emoji {
-  font-size: clamp(2rem, 8vw, 4rem);
-  margin: 10px 0;
-}
-
+/* Explications */
 .explanation {
   margin-top: 15px;
   padding: 15px;
@@ -197,6 +230,7 @@ input[type="number"] {
   border-left: 3px solid #667eea;
 }
 
+/* Footer */
 footer {
   color: white;
   width: 100%;
@@ -205,7 +239,7 @@ footer {
   font-size: 0.85rem;
   opacity: 0.9;
   margin-top: auto;
-  background-color: #33333325;
+  background-color: rgba(51, 51, 51, 0.15);
 }
 
 .footer-content {
@@ -250,6 +284,7 @@ footer a:hover {
   margin-top: 10px;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .app-logo {
     max-width: 120px;
@@ -273,5 +308,12 @@ footer a:hover {
 
   .cnd-logo {
     height: 30px;
+  }
+
+  .install-btn {
+    position: static;
+    margin: 10px auto;
+    display: block;
+    width: fit-content;
   }
 }
