@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathéMagic - Apprends les Maths !</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <img src="MathéMagic__-removebg-preview.png" alt="MathéMagic" class="app-logo">
+        <h1>✨ Apprends les Maths c'est MathéMagic ! ✨</h1>
+
+        <div id="levelSelector" class="level-selector">
+            <button class="level-btn" onclick="startLevel('CP')">CP</button>
+            <button class="level-btn" onclick="startLevel('CE1')">CE1</button>
+            <button class="level-btn" onclick="startLevel('CE2')">CE2</button>
+            <button class="level-btn" onclick="startLevel('CM1')">CM1</button>
+            <button class="level-btn" onclick="startLevel('CM2')">CM2</button>
+        </div>
+
+        <div id="gameArea" class="game-area">
+            <div class="score">
+                <span id="scoreText">Score: 0 / 0</span>
+            </div>
+
+            <div class="question" id="question"></div>
+
+            <div class="input-area">
+                <input type="number" id="answer" placeholder="?" autocomplete="off">
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-check" onclick="checkAnswer()">✅ Vérifier</button>
+                <button class="btn-hint" onclick="getHint()">💡 Indice (<span id="hintsLeft">3</span>)</button>
+                <button class="btn-back" onclick="backToLevels()">🔙 Retour</button>
+            </div>
+
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="Logo-CND-Final-removebg-preview.png" alt="CND Logo" class="cnd-logo">
+                <span>CND - Web Is Yours</span>
+            </div>
+            <div class="footer-center">
+                <a href="#" onclick="startLevel('CP'); return false;">CP</a>
+                <a href="#" onclick="startLevel('CE1'); return false;">CE1</a>
+                <a href="#" onclick="startLevel('CE2'); return false;">CE2</a>
+                <a href="#" onclick="startLevel('CM1'); return false;">CM1</a>
+                <a href="#" onclick="startLevel('CM2'); return false;">CM2</a>
+            </div>
+            <div class="footer-right">
+                <a href="https://portfolio-cnd.netlify.app/" target="_blank">Portfolio</a>
+                <a href="https://www.linkedin.com/in/naudin-claire/" target="_blank">LinkedIn</a>
+                <a href="https://www.facebook.com/profile.php?id=61564253862181" target="_blank">Facebook</a>
+            </div>
+        </div>
+        <div class="copyright">© Copyright 2026</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
