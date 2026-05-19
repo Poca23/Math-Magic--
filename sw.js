@@ -1,12 +1,12 @@
-const CACHE_NAME = "mathemagic-v1";
+const CACHE_NAME = "mathemagic-v2";
 const urlsToCache = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
   "./manifest.json",
-  "./MathéMagic__-removebg-preview.png",
-  "./Logo-CND-Final-removebg-preview.png",
+  "./MathéMagic-removebg-preview.png",
+  "./logo_V2-removebg-preview.webp",
   "./levels/cp.js",
   "./levels/ce1.js",
   "./levels/ce2.js",
@@ -17,7 +17,7 @@ const urlsToCache = [
 // Installation du Service Worker
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)),
   );
 });
 
@@ -30,9 +30,9 @@ self.addEventListener("activate", (event) => {
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 });
 
@@ -41,6 +41,6 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
-    })
+    }),
   );
 });
